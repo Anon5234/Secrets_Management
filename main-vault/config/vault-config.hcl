@@ -1,0 +1,16 @@
+storage "consul" {
+  address       = "http://consul-server:8500"
+  scheme        = "http"  
+  service       = "vault"
+  path          = "vault/"
+}
+
+listener "tcp" {
+  address       = "0.0.0.0:8200"
+  tls_disable   = 1
+}
+
+api_addr             = "http://vault-main-server:8200"
+disable_mlock        = true
+log_level            = "info"
+ui = true

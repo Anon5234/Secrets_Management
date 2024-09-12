@@ -1,0 +1,42 @@
+services:
+  consul-server:
+    image: hashicorp/consul:latest
+    container_name: consul-server
+    ports:
+      - "8500:8500"    
+      - "8600:8600/udp"  
+    volumes:
+      - /Users/garretmurray/JoplinBackup/Secrets_management/consul:/consul
+    command: ["consul", "agent", "-config-file=/consul/config/consul.hcl", "-config-dir=/consul/config"]
+    healthcheck:  
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8500/v1/status/leader"]  
+      interval: 10s  
+      timeout: 10s  
+      retries: 5
+
+  vault-main-server:
+    image: hashicorp/vault:latest
+    ports:
+      - "8200:8200"
+    volumes:
+      - /Users/garretmurray/JoplinBackup/Secrets_management/main-vault:/vault
+    command: ["vault", "server", "-config=/vault/config/vault-config.hcl"]
+    cap_add:
+      - IPC_LOCK
+    depends_on:
+      consul-server:
+        condition: service_healthy
+
+
+  vault-transit-server:
+    image: hashicorp/vault:latest
+    ports:
+      - "8350:8350"
+    volumes:
+      - /Users/garretmurray/JoplinBackup/Secrets_management/transit-vault:/transit-vault
+    command: ["vault", "server", "-config=/transit-vault/config/transit-vault.hcl"]
+    cap_add:
+      - IPC_LOCK
+    depends_on:
+      consul-server:
+        condition: service_healthy
