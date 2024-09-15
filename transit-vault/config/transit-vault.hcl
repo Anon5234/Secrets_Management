@@ -10,6 +10,8 @@ listener "tcp" {
   tls_disable   = 1
 }
 
+default_lease_ttl = "768h"  
+max_lease_ttl = "87600h"    
 api_addr = "http://vault-transit-server:8350"
 disable_mlock = true
 ui = true
