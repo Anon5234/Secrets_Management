@@ -14,6 +14,7 @@ services:
       interval: 10s  
       timeout: 10s  
       retries: 5
+    restart: unless-stopped
 
   vault-main-server:
     image: hashicorp/vault:latest
@@ -27,5 +28,8 @@ services:
     depends_on:
       consul-server:
         condition: service_healthy
+    env_file: 
+      - .env
+    restart: unless-stopped
 
 
