@@ -2,17 +2,30 @@ services:
   consul-server:
     image: hashicorp/consul:latest
     container_name: consul-server
-    ports:
-      - "8500:8500"    
-      - "8600:8600/udp"  
+    ports:  
+      - "8501:8501"
+      - "8600:8600/udp"
     volumes:
-      - /Users/garretmurray/JoplinBackup/Secrets_management/consul:/consul
-      - /Users/garretmurray/JoplinBackup/Secrets_management/consul/data:/consul/data
-    command: ["consul", "agent", "-config-file=/consul/config/consul.hcl", "-config-dir=/consul/config"]
-    healthcheck:  
-      test: ["CMD", "curl", "-f", "http://127.0.0.1:8500/v1/status/leader"]  
-      interval: 10s  
-      timeout: 10s  
+      - ./consul/config/:/consul/config/
+      - ./consul/data:/consul/data
+      - ./consul/config/certs:/etc/consul.d/certs
+    command: ["/consul/config/start-consul.sh"]
+    healthcheck:    
+      test:
+        [
+          "CMD",
+          "curl",
+          "-f",
+          "https://127.0.0.1:8501/v1/status/leader",
+          "--cacert",
+          "/etc/consul.d/certs/dc1.consul-agent-ca.pem",
+          "--cert",
+          "/etc/consul.d/certs/dc1-server-consul-0.pem",
+          "--key",
+          "/etc/consul.d/certs/dc1-server-consul-0-key.pem",
+        ] 
+      interval: 10s
+      timeout: 10s
       retries: 5
     restart: unless-stopped
 
@@ -22,6 +35,7 @@ services:
       - "8200:8200"
     volumes:
       - /Users/garretmurray/JoplinBackup/Secrets_management/main-vault:/vault
+      - ./main-vault/certs:/vault/config/certs
     command: ["vault", "server", "-config=/vault/config/vault-config.hcl"]
     cap_add:
       - IPC_LOCK
@@ -29,7 +43,7 @@ services:
       consul-server:
         condition: service_healthy
     env_file: 
-      - .env
+      - ./main-vault/.env
     restart: unless-stopped
 
 

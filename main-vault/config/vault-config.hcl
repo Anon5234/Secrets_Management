@@ -1,8 +1,12 @@
 storage "consul" {
-  address       = "http://consul-server:8500"
-  scheme        = "http"  
+  address       = "https://consul-server:8501"
+  scheme        = "https"  
   service       = "vault"
   path          = "vault/"
+
+  tls_ca_file   = "/vault/config/certs/dc1.consul-agent-ca.pem"
+  tls_cert_file = "/vault/config/certs/dc1-client-consul-0.pem"
+  tls_key_file  = "/vault/config/certs/dc1-client-consul-0-key.pem"
 }
 
 listener "tcp" {
@@ -22,3 +26,4 @@ api_addr      = "http://vault-main-server:8200"
 disable_mlock        = true
 log_level            = "info"
 ui = true
+

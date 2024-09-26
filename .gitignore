@@ -1,5 +1,5 @@
-WASTE.yaml
 *.DS_Store
 consul/data/
 transit-vault/logs/
-.env
+**/*.env
+consul/config/encrypt.key
