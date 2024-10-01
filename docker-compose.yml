@@ -35,6 +35,7 @@ services:
       - ./main-vault/certs:/vault/config/certs
       - ./main-vault/certs/vault.crt:/etc/certs/vault.crt
       - ./main-vault/certs/vault.key:/etc/certs/vault.key
+      - ./main-vault/certs/vault-ca.crt:/etc/certs/vault-ca.crt
     command: ["vault", "server", "-config=/vault/config/vault-config.hcl"]
     cap_add:
       - IPC_LOCK

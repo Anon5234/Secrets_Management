@@ -10,9 +10,11 @@ storage "consul" {
 }
 
 listener "tcp" {
-  address       = "0.0.0.0:8200"
-  tls_cert_file = "/etc/certs/vault.crt"  
-  tls_key_file  = "/etc/certs/vault.key" 
+  address                            = "0.0.0.0:8200"
+  tls_cert_file                      = "/etc/certs/vault.crt"  
+  tls_key_file                       = "/etc/certs/vault.key"
+  tls_client_ca_file                 = "/etc/certs/vault-ca.crt"
+  tls_require_and_verify_client_cert = true
 }
 
 seal "awskms" {
