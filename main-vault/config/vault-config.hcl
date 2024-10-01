@@ -11,7 +11,8 @@ storage "consul" {
 
 listener "tcp" {
   address       = "0.0.0.0:8200"
-  tls_disable   = 1
+  tls_cert_file = "/etc/certs/vault.crt"  
+  tls_key_file  = "/etc/certs/vault.key" 
 }
 
 seal "awskms" {
@@ -22,7 +23,7 @@ seal "awskms" {
 }
 
 
-api_addr      = "http://vault-main-server:8200"
+api_addr             = "https://vault-main-server:8200"
 disable_mlock        = true
 log_level            = "info"
 ui = true

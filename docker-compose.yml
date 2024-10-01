@@ -2,9 +2,6 @@ services:
   consul-server:
     image: hashicorp/consul:latest
     container_name: consul-server
-    ports:  
-      - "8501:8501"
-      - "8600:8600/udp"
     volumes:
       - ./consul/config/:/consul/config/
       - ./consul/data:/consul/data
@@ -34,8 +31,10 @@ services:
     ports:
       - "8200:8200"
     volumes:
-      - /Users/garretmurray/JoplinBackup/Secrets_management/main-vault:/vault
+      - ./main-vault:/vault
       - ./main-vault/certs:/vault/config/certs
+      - ./main-vault/certs/vault.crt:/etc/certs/vault.crt
+      - ./main-vault/certs/vault.key:/etc/certs/vault.key
     command: ["vault", "server", "-config=/vault/config/vault-config.hcl"]
     cap_add:
       - IPC_LOCK

@@ -6,7 +6,6 @@ server = true
 bootstrap_expect = 1
 datacenter = "dc1"
 
-# Enable the Consul Web UI using the new syntax
 ui_config {
   enabled = true  # Enable the Consul Web UI
 }
