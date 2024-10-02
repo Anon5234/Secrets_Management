@@ -7,7 +7,7 @@ bootstrap_expect = 1
 datacenter = "dc1"
 
 ui_config {
-  enabled = true  # Enable the Consul Web UI
+  enabled = false
 }
 
 ports {
