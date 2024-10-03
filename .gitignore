@@ -1,5 +1,8 @@
 *.DS_Store
 consul/data/
-transit-vault/logs/
+main-vault/file/
+main-vault/logs/
 **/*.env
 consul/config/encrypt.key
+main-vault/certs/
+consul/config/certs/
