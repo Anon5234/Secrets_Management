@@ -7,7 +7,7 @@ consul/config/encrypt.key
 
 # Vault directory
 main-vault/certs/
-main-vault/config/policies/test.env
+main-vault/config/policies/
 main-vault/file/
 main-vault/logs/
 
