@@ -137,21 +137,6 @@ To stop the services, run:
 docker-compose down
 ```
 
-## Why This Setup?
-
-1. Security with Mutual TLS (mTLS):
-
-- All communication between Vault, Consul, and any clients is secured using mutual TLS, ensuring that only authenticated clients can communicate with the server.
-- The use of mTLS prevents unauthorised access to the Vault API and Consul storage.
-
-2. Auto-Unseal with AWS KMS:
-
-- Vault auto-unseals using AWS KMS, eliminating the need to manually unseal Vault after a restart. This makes the system more reliable and secure for production use, where manual intervention should be minimized.
-
-3. Local Testing and Development:
-
-- The system is designed to run on your local machine, providing a secure environment for managing and storing your secrets. This setup allows you to leverage Vault’s full capabilities locally, ensuring that sensitive information is securely stored and protected.
-
 
 ## Notes
 
